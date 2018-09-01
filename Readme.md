@@ -1,7 +1,7 @@
-# Учебный проект «Код и Магия» [![Build status][travis-image]][travis-url]
+﻿# Учебный проект «Код и Магия» [![Build status][travis-image]][travis-url]
 
 * Студент: [Tanya Nagornaya](https://up.htmlacademy.ru/javascript/15/user/474667).
-* Наставник: `Неизвестно`.
+* Наставник: `Aleksey Hapov`.
 
 ---
 
