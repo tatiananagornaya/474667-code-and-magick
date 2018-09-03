@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Mono&subset=latin,cyrillic">
   <link rel="stylesheet" href="css/main.css">
-  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
   <title>Код и Магия</title>
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 </head>
 <body>
 
@@ -180,8 +180,25 @@
     <p class="setup-similar-label">Петр Петров</p>
   </div>
 </template>
-
+<script>
+  var fireballSize = 22;
+  var wizardSpeed = 3;
+  var wizardWidth = 70;
+  var getFireballSpeed = function (left) {
+    return left ? 5 : 2;
+  };
+  var getWizardHeight = function (wizardWidth) {
+    return 1.337 * wizardWidth;
+  };
+  var getWizardX = function (width) {
+    return width / 2 - (wizardWidth / 2);
+  };
+  var getWizardY = function (height) {
+    return height / 3;
+  };
+</script>
 <script src="js/game.js"></script>
+
 
 </body>
 </html>
