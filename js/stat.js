@@ -20,7 +20,7 @@ var renderCloud = function(ctx, x, y, color) {
 };
 
 var renderCongrats = function (ctx, text, x, y) {
-  ctx.fillStyle = 'black';
+  ctx.fillStyle = 'rgb(0, 0, 0)';
   ctx.font = '16 px PT Mono';
   ctx.fillText(text, x, y);
 };
@@ -34,41 +34,43 @@ var renderCongrats = function (ctx, text, x, y) {
    }
    return maxValue;
  };
- 
+
 var renderText = function (ctx, names) {
   renderCongrats(ctx, 'Ура вы победили!', textX, textY);
   renderCongrats(ctx, 'Список результатов:', textX, textY * 1.5);
 
-  ctx.fillStyle = 'black';
-  for (var j = 0; j < names.length; j++) {
-    ctx.fillText(names[j], (CLOUD_X + FONT_GAP) + TEXT_WIDTH * j + FONT_GAP * j, BAR_NAME_Y);
+  ctx.fillStyle = 'rgb(0, 0, 0)';
+  for (var i = 0; i < names.length; i++) {
+    ctx.fillText(names[i], (CLOUD_X + FONT_GAP) + TEXT_WIDTH * i + FONT_GAP * i, BAR_NAME_Y);
   }
 };
 
 var renderFigures = function (ctx, times) {
   var maxTime = getMaxValue(times);
 
-  ctx.fillStyle = 'black';
-  for (var z = 0; z < times.length; z++) {
-    ctx.fillText(Math.round(times[z]), (CLOUD_X + FONT_GAP) + TEXT_WIDTH * z + FONT_GAP * z, BAR_NAME_Y - (times[z] * BAR_HEIGHT / maxTime) - GAP * 2 );
+  ctx.fillStyle = 'rgb(0, 0, 0)';
+  for (var i = 0; i < times.length; i++) {
+    ctx.fillText(Math.round(times[i]), (CLOUD_X + FONT_GAP) + TEXT_WIDTH * i + FONT_GAP * i, BAR_NAME_Y - (times[i] * BAR_HEIGHT / maxTime) - GAP * 2 );
   }
+};
+
+var getRandomColor = function () {
+  return Math.floor(Math.random() * 255);
 };
 
 window.renderStatistics = function (ctx, names, times) {
   renderCloud(ctx, CLOUD_X + GAP, CLOUD_Y + GAP, 'rgba(0, 0, 0, 0.7');
-  renderCloud(ctx, CLOUD_X, CLOUD_Y, 'white');
+  renderCloud(ctx, CLOUD_X, CLOUD_Y, 'rgb(255, 255, 255)');
   renderText(ctx, names);
   renderFigures(ctx, times);
 
   var maxTime = getMaxValue(times);
-  var yourResultIndex = names.indexOf('Вы');
+  var color = getRandomColor();
 
   for (var i = 0; i < names.length; i++) {
-    if (i === yourResultIndex) {
-      ctx.fillStyle = 'rgba(255, 0, 0, 1)';
-  } else {
-      ctx.fillStyle = 'blue';
-    }
+    ctx.fillStyle = (names[i] === 'Вы') ? 'rgba(255, 0, 0, 1)' :
+      names[names.length - 1] ? 'rgb(0, 0, 255)' :
+       'rgb(' + '0, ' + color + ', ' + color + ')';
     ctx.fillRect((CLOUD_X + FONT_GAP) + TEXT_WIDTH * i + FONT_GAP * i, BAR_Y - (times[i] * BAR_HEIGHT / maxTime), barWidth, times[i] * BAR_HEIGHT / maxTime);
   }
 };
