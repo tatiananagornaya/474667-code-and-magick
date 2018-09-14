@@ -35,21 +35,14 @@ var renderCongrats = function (ctx, text, x, y) {
    return maxValue;
  };
 
-var renderText = function (ctx, names) {
+var renderText = function (ctx, names, times) {
   renderCongrats(ctx, 'Ура вы победили!', textX, textY);
   renderCongrats(ctx, 'Список результатов:', textX, textY * 1.5);
-
-  ctx.fillStyle = 'rgb(0, 0, 0)';
-  for (var i = 0; i < names.length; i++) {
-    ctx.fillText(names[i], (CLOUD_X + FONT_GAP) + TEXT_WIDTH * i + FONT_GAP * i, BAR_NAME_Y);
-  }
-};
-
-var renderFigures = function (ctx, times) {
   var maxTime = getMaxValue(times);
 
   ctx.fillStyle = 'rgb(0, 0, 0)';
   for (var i = 0; i < times.length; i++) {
+    ctx.fillText(names[i], (CLOUD_X + FONT_GAP) + TEXT_WIDTH * i + FONT_GAP * i, BAR_NAME_Y);
     ctx.fillText(Math.round(times[i]), (CLOUD_X + FONT_GAP) + TEXT_WIDTH * i + FONT_GAP * i, BAR_NAME_Y - (times[i] * BAR_HEIGHT / maxTime) - GAP * 2 );
   }
 };
@@ -61,16 +54,14 @@ var getRandomColor = function () {
 window.renderStatistics = function (ctx, names, times) {
   renderCloud(ctx, CLOUD_X + GAP, CLOUD_Y + GAP, 'rgba(0, 0, 0, 0.7');
   renderCloud(ctx, CLOUD_X, CLOUD_Y, 'rgb(255, 255, 255)');
-  renderText(ctx, names);
-  renderFigures(ctx, times);
+  renderText(ctx, names, times);
 
   var maxTime = getMaxValue(times);
   var color = getRandomColor();
 
   for (var i = 0; i < names.length; i++) {
     ctx.fillStyle = (names[i] === 'Вы') ? 'rgba(255, 0, 0, 1)' :
-      names[names.length - 1] ? 'rgb(0, 0, 255)' :
-       'rgb(' + '0, ' + color + ', ' + color + ')';
+       'rgb(' + '0, ' + color + ', ' + (color * i) + ')';
     ctx.fillRect((CLOUD_X + FONT_GAP) + TEXT_WIDTH * i + FONT_GAP * i, BAR_Y - (times[i] * BAR_HEIGHT / maxTime), barWidth, times[i] * BAR_HEIGHT / maxTime);
   }
 };
