@@ -31,8 +31,7 @@ var renderCloud = function(ctx, x, y, color) {
    return maxValue;
  };
 
-var renderText = function (ctx, names, times, x, y) {
-  var maxTime = getMaxValue(times);
+var renderText = function (ctx, text, x, y) {
   ctx.fillText(text, x, y);
 };
 
@@ -47,13 +46,12 @@ window.renderStatistics = function (ctx, names, times) {
 
   for (j = 0; j < names.length; j++) {
     ctx.fillStyle = 'rgb(0, 0, 0)';
-    ctx.fillText(names[j], (CLOUD_X + FONT_GAP) + TEXT_WIDTH * j + FONT_GAP * j, BAR_NAME_Y);
-    ctx.fillText(Math.round(times[j]), (CLOUD_X + FONT_GAP) + TEXT_WIDTH * j + FONT_GAP * j, BAR_NAME_Y - (times[j] * BAR_HEIGHT / maxTime) - GAP * 2 );
+    renderText(ctx, names[j], (CLOUD_X + FONT_GAP) + TEXT_WIDTH * j + FONT_GAP * j, BAR_NAME_Y);
+    renderText(ctx, Math.round(times[j]), (CLOUD_X + FONT_GAP) + TEXT_WIDTH * j + FONT_GAP * j, BAR_NAME_Y - (times[j] * BAR_HEIGHT / maxTime) - GAP * 2 );
 
     ctx.font = '16px PT Mono';
-    ctx.fillText(text[0], TEXT_X, TEXT_Y);
-    ctx.fillText(text[1], TEXT_X, TEXT_Y * 1.5);
-    renderText(ctx, names, times);
+    renderText(ctx, text[0], TEXT_X, TEXT_Y);
+    renderText(ctx, text[1], TEXT_X, TEXT_Y * 1.5);
   }
 
   var color = getRandomColor();
