@@ -5,7 +5,7 @@ var CLOUD_HEIGHT = 270;
 var CLOUD_X = 100;
 var CLOUD_Y = 10;
 var GAP = 10;
-var BAR_HEIGHT = 150;
+var MAX_BAR_HEIGHT = 150;
 var TEXT_WIDTH = 40;
 var FONT_GAP = 50;
 var BAR_NAME_Y = 265;
@@ -50,12 +50,17 @@ window.renderStatistics = function (ctx, names, times) {
   renderText(ctx, text[1], TEXT_X, TEXT_Y * 1.5);
 
   for (var i = 0; i < names.length; i++) {
+    var barNameY = (CLOUD_X + FONT_GAP) + TEXT_WIDTH * i + FONT_GAP * i;
+    var timesX = (CLOUD_X + FONT_GAP) + TEXT_WIDTH * i + FONT_GAP * i;
+    var timesY = BAR_NAME_Y - (times[i] * MAX_BAR_HEIGHT / maxTime) - GAP * 2;
+    var barX = (CLOUD_X + FONT_GAP) + TEXT_WIDTH * i + FONT_GAP * i;
+    var barHeight = times[i] * MAX_BAR_HEIGHT / maxTime;
+
     ctx.fillStyle = 'rgb(0, 0, 0)';
-    renderText(ctx, names[i], (CLOUD_X + FONT_GAP) + TEXT_WIDTH * i + FONT_GAP * i, BAR_NAME_Y);
-    renderText(ctx, Math.round(times[i]), (CLOUD_X + FONT_GAP) + TEXT_WIDTH * i + FONT_GAP * i, BAR_NAME_Y - (times[i] * BAR_HEIGHT / maxTime) - GAP * 2 );
+    renderText(ctx, names[i], barNameY, BAR_NAME_Y);
+    renderText(ctx, Math.round(times[i]), timesX, timesY);
     ctx.fillStyle = (names[i] === 'Вы') ? 'rgba(255, 0, 0, 1)' :
       'hsla(240, 100%, 50%, .' + (color * i + 5) + ')';
-    ctx.fillRect((CLOUD_X + FONT_GAP) + TEXT_WIDTH * i + FONT_GAP * i, BAR_Y - (times[i] * BAR_HEIGHT / maxTime), barWidth, times[i] * BAR_HEIGHT / maxTime);
+    ctx.fillRect(barX, BAR_Y - (times[i] * MAX_BAR_HEIGHT / maxTime), barWidth, barHeight);
   }
-
 };
