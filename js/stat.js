@@ -42,21 +42,20 @@ window.renderStatistics = function (ctx, names, times) {
   renderCloud(ctx, CLOUD_X + GAP, CLOUD_Y + GAP, 'rgba(0, 0, 0, 0.7');
   renderCloud(ctx, CLOUD_X, CLOUD_Y, 'rgb(255, 255, 255)');
   var maxTime = getMaxValue(times);
+  var color = getRandomColor();
 
   ctx.fillStyle = 'rgb(0, 0, 0)';
-  for (var j = 0; j < names.length; j++) {
-    renderText(ctx, names[j], (CLOUD_X + FONT_GAP) + TEXT_WIDTH * j + FONT_GAP * j, BAR_NAME_Y);
-    renderText(ctx, Math.round(times[j]), (CLOUD_X + FONT_GAP) + TEXT_WIDTH * j + FONT_GAP * j, BAR_NAME_Y - (times[j] * BAR_HEIGHT / maxTime) - GAP * 2 );
-  }
   ctx.font = '16px PT Mono';
   renderText(ctx, text[0], TEXT_X, TEXT_Y);
   renderText(ctx, text[1], TEXT_X, TEXT_Y * 1.5);
 
-  var color = getRandomColor();
-
   for (var i = 0; i < names.length; i++) {
+    ctx.fillStyle = 'rgb(0, 0, 0)';
+    renderText(ctx, names[i], (CLOUD_X + FONT_GAP) + TEXT_WIDTH * i + FONT_GAP * i, BAR_NAME_Y);
+    renderText(ctx, Math.round(times[i]), (CLOUD_X + FONT_GAP) + TEXT_WIDTH * i + FONT_GAP * i, BAR_NAME_Y - (times[i] * BAR_HEIGHT / maxTime) - GAP * 2 );
     ctx.fillStyle = (names[i] === 'Вы') ? 'rgba(255, 0, 0, 1)' :
       'hsla(240, 100%, 50%, .' + (color * i + 5) + ')';
     ctx.fillRect((CLOUD_X + FONT_GAP) + TEXT_WIDTH * i + FONT_GAP * i, BAR_Y - (times[i] * BAR_HEIGHT / maxTime), barWidth, times[i] * BAR_HEIGHT / maxTime);
   }
+
 };
