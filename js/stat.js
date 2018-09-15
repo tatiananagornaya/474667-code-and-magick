@@ -14,7 +14,6 @@ var TEXT_X = 150;
 var TEXT_Y = 40;
 var barWidth = TEXT_WIDTH;
 var text = ['Ура вы победили!', 'Список результатов:'];
-var j = 0;
 
 var renderCloud = function(ctx, x, y, color) {
   ctx.fillStyle = color;
@@ -44,15 +43,14 @@ window.renderStatistics = function (ctx, names, times) {
   renderCloud(ctx, CLOUD_X, CLOUD_Y, 'rgb(255, 255, 255)');
   var maxTime = getMaxValue(times);
 
-  for (j = 0; j < names.length; j++) {
-    ctx.fillStyle = 'rgb(0, 0, 0)';
+  ctx.fillStyle = 'rgb(0, 0, 0)';
+  for (var j = 0; j < names.length; j++) {
     renderText(ctx, names[j], (CLOUD_X + FONT_GAP) + TEXT_WIDTH * j + FONT_GAP * j, BAR_NAME_Y);
     renderText(ctx, Math.round(times[j]), (CLOUD_X + FONT_GAP) + TEXT_WIDTH * j + FONT_GAP * j, BAR_NAME_Y - (times[j] * BAR_HEIGHT / maxTime) - GAP * 2 );
-
-    ctx.font = '16px PT Mono';
-    renderText(ctx, text[0], TEXT_X, TEXT_Y);
-    renderText(ctx, text[1], TEXT_X, TEXT_Y * 1.5);
   }
+  ctx.font = '16px PT Mono';
+  renderText(ctx, text[0], TEXT_X, TEXT_Y);
+  renderText(ctx, text[1], TEXT_X, TEXT_Y * 1.5);
 
   var color = getRandomColor();
 
