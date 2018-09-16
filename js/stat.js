@@ -46,21 +46,19 @@ window.renderStatistics = function (ctx, names, times) {
 
   ctx.fillStyle = 'rgb(0, 0, 0)';
   ctx.font = '16px PT Mono';
-  renderText(ctx, text[0], TEXT_X, TEXT_Y);
-  renderText(ctx, text[1], TEXT_X, TEXT_Y * 1.5);
+  for (var j = 0; j < text.length; j++) {
+    renderText(ctx, text[j], TEXT_X, 20 * j + TEXT_Y );
+  }
 
   for (var i = 0; i < names.length; i++) {
-    var barNameY = (CLOUD_X + FONT_GAP) + TEXT_WIDTH * i + FONT_GAP * i;
-    var timesX = (CLOUD_X + FONT_GAP) + TEXT_WIDTH * i + FONT_GAP * i;
-    var timesY = BAR_NAME_Y - (times[i] * MAX_BAR_HEIGHT / maxTime) - GAP * 2;
-    var barX = (CLOUD_X + FONT_GAP) + TEXT_WIDTH * i + FONT_GAP * i;
+    var coordinate = (CLOUD_X + FONT_GAP) + TEXT_WIDTH * i + FONT_GAP * i;
     var barHeight = times[i] * MAX_BAR_HEIGHT / maxTime;
 
     ctx.fillStyle = 'rgb(0, 0, 0)';
-    renderText(ctx, names[i], barNameY, BAR_NAME_Y);
-    renderText(ctx, Math.round(times[i]), timesX, timesY);
+    renderText(ctx, names[i], coordinate, BAR_NAME_Y);
+    renderText(ctx, Math.round(times[i]), coordinate, BAR_NAME_Y - barHeight - GAP * 2);
     ctx.fillStyle = (names[i] === 'Вы') ? 'rgba(255, 0, 0, 1)' :
       'hsla(240, 100%, 50%, .' + (color * i + 5) + ')';
-    ctx.fillRect(barX, BAR_Y - (times[i] * MAX_BAR_HEIGHT / maxTime), barWidth, barHeight);
+    ctx.fillRect(coordinate, BAR_Y - barHeight, barWidth, barHeight);
   }
 };
